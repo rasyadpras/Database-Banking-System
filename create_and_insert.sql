@@ -1,3 +1,4 @@
+--DDL
 CREATE TABLE users (
 	user_id SERIAL PRIMARY KEY,
 	first_name VARCHAR NOT NULL,
@@ -23,6 +24,8 @@ CREATE TABLE transactions (
 	deposit_amount MONEY,
 	withdraw_amount MONEY
 );
+
+--DML
 
 INSERT INTO users (user_id, first_name, last_name, citizenship, birth_date)
 VALUES
@@ -82,6 +85,30 @@ VALUES (8, 1, '0', 'USD');
 
 DELETE FROM bank_account WHERE account_id = 8;
 
+--Index
+
 CREATE INDEX index_citizenship ON users (citizenship);
 
 SELECT * FROM users WHERE citizenship = 'Indonesian';
+
+--Stored Procedure
+CREATE OR REPLACE PROCEDURE deposit (
+	account INT,
+	amount MONEY
+)
+LANGUAGE plpgsql    
+AS $$
+BEGIN
+    UPDATE bank_account
+    SET balance = balance + amount 
+    WHERE account_id = account;
+    commit;
+end;$$
+
+CALL deposit(1,'500');
+
+--CTE
+WITH user_balance AS (
+	SELECT user_id, balance FROM bank_account
+)
+SELECT * FROM user_balance ORDER BY user_id ASC;
