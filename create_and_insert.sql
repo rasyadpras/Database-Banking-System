@@ -81,3 +81,7 @@ INSERT INTO bank_account (account_id, user_id, balance, currency)
 VALUES (8, 1, '0', 'USD');
 
 DELETE FROM bank_account WHERE account_id = 8;
+
+CREATE INDEX index_citizenship ON users (citizenship);
+
+SELECT * FROM users WHERE citizenship = 'Indonesian';
