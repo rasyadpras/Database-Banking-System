@@ -32,7 +32,7 @@ VALUES
 	(4, 'Adele', 'Adkins', 'British', '1988-05-05'),
 	(5, 'Younghyun', 'Kang', 'Korean', '1993-12-19');
 	
-SELECT * FROM users;
+SELECT * FROM users ORDER BY user_id ASC;
 
 INSERT INTO bank_account (account_id, user_id, balance, currency)
 VALUES
@@ -44,7 +44,7 @@ VALUES
 	(6, 4, '13000', 'USD'),
 	(7, 5, '500000', 'USD');
 	
-SELECT * FROM bank_account;
+SELECT * FROM bank_account ORDER BY account_id ASC;
 
 INSERT INTO transactions (transaction_id, account_id, deposit_amount, withdraw_amount)
 VALUES
@@ -54,7 +54,7 @@ VALUES
 	(4, 5, NULL, '50000'),
 	(5, 7, '100000', NULL);
 	
-SELECT * FROM transactions;
+SELECT * FROM transactions ORDER BY transaction_id ASC;
 
 UPDATE bank_account SET balance = balance + '500' WHERE account_id = 1;
 UPDATE bank_account SET updated_at = CURRENT_TIMESTAMP WHERE account_id = 1;
@@ -76,3 +76,8 @@ SET
 	balance = balance + '100000',
 	updated_at = CURRENT_TIMESTAMP
 WHERE account_id = 7;
+
+INSERT INTO bank_account (account_id, user_id, balance, currency)
+VALUES (8, 1, '0', 'USD');
+
+DELETE FROM bank_account WHERE account_id = 8;
