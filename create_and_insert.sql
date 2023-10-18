@@ -103,12 +103,19 @@ BEGIN
     SET balance = balance + amount 
     WHERE account_id = account;
     commit;
-end;$$
+end $$;
 
 CALL deposit(1,'500');
 
 --CTE
 WITH user_balance AS (
-	SELECT user_id, balance FROM bank_account
+	SELECT
+		users.user_id,
+		CONCAT(first_name, ' ', last_name) AS name ,
+		citizenship,
+		birth_date,
+		balance,
+		currency
+	FROM users INNER JOIN bank_account ON users.user_id = bank_account.user_id
 )
 SELECT * FROM user_balance ORDER BY user_id ASC;
